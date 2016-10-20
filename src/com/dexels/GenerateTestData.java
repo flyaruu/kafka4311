@@ -14,8 +14,8 @@ import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import com.dexels.replication.api.ReplicationMessage;
-import com.dexels.replication.api.ReplicationMessageParser;
 import com.dexels.replication.api.ReplicationMessage.Operation;
+import com.dexels.replication.api.ReplicationMessageParser;
 import com.dexels.replication.impl.ReplicationMessageParserImpl;
 
 public class GenerateTestData {
@@ -44,7 +44,7 @@ public class GenerateTestData {
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		activate();
-		for (int i = 0; i < 50000; i++) {
+		for (int i = 0; i < 9000; i++) {
 			ReplicationMessage rm = createReplicationMessage("personid","PERSON"+i,"name","name"+i,"gender","gender"+i,20);
 //			String res = new String( rm.toBytes());
 //			System.err.println("res: "+res);
@@ -58,7 +58,7 @@ public class GenerateTestData {
 			ProducerRecord<String, byte[]> producerRecord = new ProducerRecord<String, byte[]>("TESTADDRESS","ADDRESS"+i, rm.toBytes());
 			producer.send(producerRecord);
 		}
-		for (int i = 0; i < 150000; i++) {
+		for (int i = 0; i < 9000; i++) {
 			ReplicationMessage rm = createReplicationMessage("addressid","ADDRESS"+i,"personid","PERSON"+(int)(i / 10),"other","other"+i,20);
 //			String res = new String( rm.toBytes());
 //			System.err.println("res: "+res);
@@ -69,6 +69,10 @@ public class GenerateTestData {
 		producer.flush();
 		producer.close();
 		System.err.println("done");
+	}
+	
+	private static ReplicationMessage removeRealData(ReplicationMessage msg) {
+		return null;
 	}
 
 	private static ReplicationMessage createReplicationMessage(String primary, String primaryValue, String key1,String value1, String key2,String value2, int numberOfRandomFields) {
@@ -99,4 +103,8 @@ public class GenerateTestData {
 	      sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
 	   return sb.toString();
 	}
+	
+	
+
+
 }

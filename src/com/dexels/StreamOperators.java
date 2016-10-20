@@ -81,7 +81,7 @@ public class StreamOperators {
 	}
 	
 	public static ReplicationMessage joinReplication(ReplicationMessage core, List<ReplicationMessage> added, String sub) {
-		System.err.println("Merging with list: "+added);
+//		System.err.println("Merging with list: "+added);
 		if(added!=null) {
 			core.setSubMessages(sub, added);
 		}
